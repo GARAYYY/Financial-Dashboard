@@ -319,7 +319,17 @@ body {
   gap: 2px;
 }
 
-.tx-title, .tx-date {
+.tx-form select {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: white;
+  outline: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tx-title, .tx-date, .tx-category {
   font-size: 11px;
   color: #777;
   text-align: left;

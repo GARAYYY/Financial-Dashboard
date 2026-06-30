@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function TransactionForm({ onSave, onCancel, initial }) {
+export default function TransactionForm({ onSave, onCancel, initial, categories }) {
 
     const [type, setType] = useState(initial?.type || 'expense')
     const [amount, setAmount] = useState(initial?.amount || '')
@@ -8,6 +8,14 @@ export default function TransactionForm({ onSave, onCancel, initial }) {
     const [date, setDate] = useState(
         initial?.date || new Date().toISOString().split('T')[0]
     )
+    const [categoryId, setCategoryId] = useState(initial?.category_id || '')
+
+    // 🔄 reset category cuando cambia tipo
+    useEffect(() => {
+        setCategoryId('')
+    }, [type])
+
+    console.log(categories)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -17,13 +25,16 @@ export default function TransactionForm({ onSave, onCancel, initial }) {
             type,
             amount,
             description,
-            date
+            date,
+            category_id: categoryId // 🆕
         })
     }
 
+    // 🎯 filtrar categorías por tipo
+    const filteredCategories = categories?.filter(c => c.type === type) || []
+
     return (
         <form className="tx-form" onSubmit={handleSubmit}>
-
             <h3>{initial ? 'Editar' : 'Nueva'} transacción</h3>
 
             {/* TYPE */}
@@ -53,6 +64,21 @@ export default function TransactionForm({ onSave, onCancel, initial }) {
                 onChange={(e) => setAmount(e.target.value)}
                 required
             />
+
+            {/* CATEGORY 🆕 */}
+            <select
+                value={categoryId}
+                onChange={(e) => setCategoryId(e.target.value)}
+                required
+            >
+                <option value="">Selecciona categoría</option>
+
+                {filteredCategories.map(c => (
+                    <option key={c.id} value={c.id}>
+                        {c.name}
+                    </option>
+                ))}
+            </select>
 
             {/* DESCRIPTION */}
             <input

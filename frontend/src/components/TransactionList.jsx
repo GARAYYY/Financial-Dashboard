@@ -3,7 +3,14 @@ import pencilItem from '../img/pencil.svg'
 import trashOutlineItem from '../img/trash-can-outline.svg'
 import trashItem from '../img/trash-can.svg'
 
-export default function TransactionList({ transactions, onEdit, onDelete }) {
+export default function TransactionList({ transactions, categories, onEdit, onDelete }) {
+
+    // 🔎 helper para obtener nombre de categoría
+    const getCategoryName = (id) => {
+        const cat = categories?.find(c => c.id === id)
+        return cat ? cat.name : 'Sin categoría'
+    }
+
     return (
         <div className="tx-list">
 
@@ -25,15 +32,20 @@ export default function TransactionList({ transactions, onEdit, onDelete }) {
 
                         {/* LEFT */}
                         <div className="tx-info">
-                            <p className="tx-title">
-                                {t.description || 'Sin descripción'}
+                            <p className="tx-category">
+                                {getCategoryName(t.category_id)}
                             </p>
+                            <p className="tx-title">
+                                {t.description || getCategoryName(t.category_id)}
+                            </p>
+
                             <p className="tx-date">
                                 {new Date(t.date).toLocaleDateString()}
                             </p>
+
                         </div>
 
-                        {/* RIGHT (ICONS PRO) */}
+                        {/* RIGHT */}
                         <div className="tx-actions">
 
                             {/* EDIT */}

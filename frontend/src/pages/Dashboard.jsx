@@ -7,10 +7,11 @@ import TransactionForm from '../components/TransactionForm'
 export default function Dashboard({ user }) {
     const [tab, setTab] = useState('home')
     const [transactions, setTransactions] = useState([])
+    const [categories, setCategories] = useState([])
     const [mode, setMode] = useState('list')
     const [editing, setEditing] = useState(null)
 
-    // 📦 FETCH (estable)
+    // 📦 FETCH TRANSACTIONS
     const fetchTransactions = useCallback(async () => {
         if (!user) return
 
@@ -28,9 +29,27 @@ export default function Dashboard({ user }) {
         setTransactions(data || [])
     }, [user])
 
+    // 📦 FETCH CATEGORIES 🆕
+    const fetchCategories = useCallback(async () => {
+        if (!user) return
+
+        const { data, error } = await supabase
+            .from('categories')
+            .select('*')
+            .or(`user_id.is.null,user_id.eq.${user.id}`)
+
+        if (error) {
+            console.error(error)
+            return
+        }
+
+        setCategories(data || [])
+    }, [user])
+
     useEffect(() => {
         fetchTransactions()
-    }, [fetchTransactions])
+        fetchCategories() // 🆕
+    }, [fetchTransactions, fetchCategories])
 
     // ➕ CREATE
     const handleCreate = async (data) => {
@@ -103,17 +122,20 @@ export default function Dashboard({ user }) {
                 {tab === 'transactions' && (
                     <div className="transactions">
 
-                        <button
-                            className="fab"
-                            onClick={() => setMode('create')}
-                        >
-                            +
-                        </button>
+                        {mode === 'list' && (
+                            <button
+                                className="fab"
+                                onClick={() => setMode('create')}
+                            >
+                                +
+                            </button>
+                        )}
 
                         {/* LISTA */}
                         {mode === 'list' && (
                             <TransactionList
                                 transactions={transactions}
+                                categories={categories} // 🆕
                                 onEdit={(t) => {
                                     setEditing(t)
                                     setMode('edit')
@@ -125,6 +147,7 @@ export default function Dashboard({ user }) {
                         {/* CREAR */}
                         {mode === 'create' && (
                             <TransactionForm
+                                categories={categories} // 🆕
                                 onSave={handleCreate}
                                 onCancel={() => setMode('list')}
                             />
@@ -133,6 +156,7 @@ export default function Dashboard({ user }) {
                         {/* EDITAR */}
                         {mode === 'edit' && (
                             <TransactionForm
+                                categories={categories} // 🆕
                                 initial={editing}
                                 onSave={handleUpdate}
                                 onCancel={() => {
