@@ -1,26 +1,40 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from './utils/supabase'
+import Auth from './Auth'
 
-export default function App() {
-  const [transactions, settransactions] = useState([])
+function App() {
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
-    async function gettransactions() {
-      const { data: transactions } = await supabase.from('transactions').select()
+    // Obtener sesión inicial
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user)
+    })
 
-      if (transactions) {
-        settransactions(transactions)
+    // Escuchar cambios (login/logout)
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(session?.user ?? null)
       }
-    }
+    )
 
-    gettransactions()
+    return () => {
+      listener.subscription.unsubscribe()
+    }
   }, [])
 
+  if (!user) {
+    return <Auth />
+  }
+
   return (
-    <ul>
-      {transactions.map((todo) => (
-        <li key={todo.id}>{todo.name}</li>
-      ))}
-    </ul>
+    <div>
+      <h1>Dashboard</h1>
+      <button onClick={() => supabase.auth.signOut()}>
+        Logout
+      </button>
+    </div>
   )
 }
+
+export default App
