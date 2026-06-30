@@ -1,0 +1,27 @@
+.chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.chart-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chart-card h3 {
+    font-size: 12px;
+    color: #666;
+}
+
+.chart-card.full {
+    grid-column: span 2;
+}

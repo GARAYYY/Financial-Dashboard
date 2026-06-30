@@ -7,6 +7,20 @@ import '../styles/dashboard.css'
 import '../styles/balance.css'
 import '../styles/transactions.css'
 import '../styles/homeKpis.css'
+import '../styles/charts.css'
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    Tooltip,
+    ResponsiveContainer,
+    AreaChart,
+    Area,
+    PieChart,
+    Pie,
+    Cell
+} from 'recharts'
 
 export default function Dashboard({ user }) {
     const [tab, setTab] = useState('home')
@@ -138,6 +152,32 @@ export default function Dashboard({ user }) {
                 previousMonthExpenses) * 100
     }
 
+    const incomeData = transactions
+        .filter(t => t.type === 'income')
+        .reduce((acc, t) => {
+            const date = t.date
+            const existing = acc.find(i => i.date === date)
+            if (existing) {
+                existing.total += Number(t.amount)
+            } else {
+                acc.push({ date, total: Number(t.amount) })
+            }
+            return acc
+        }, [])
+
+    const expenseData = transactions
+        .filter(t => t.type === 'expense')
+        .reduce((acc, t) => {
+            const date = t.date
+            const existing = acc.find(i => i.date === date)
+            if (existing) {
+                existing.total += Number(t.amount)
+            } else {
+                acc.push({ date, total: Number(t.amount) })
+            }
+            return acc
+        }, [])
+
     const topCategory = expenseByCategory.sort((a, b) => b.total - a.total)[0]
 
     return (
@@ -247,7 +287,56 @@ export default function Dashboard({ user }) {
                     </div>
                 )}
                 {tab === 'chart' && (
-                    <h2>📊 Gastos vs ingresos</h2>
+                    <div className="chart-grid">
+                        <div className="chart-card">
+                            <h3>Gastos</h3>
+                            <ResponsiveContainer width="100%" height={200}>
+                                <AreaChart data={expenseData}>
+                                    <XAxis dataKey="date" hide />
+                                    <YAxis hide />
+                                    <Tooltip />
+                                    <Area
+                                        type="monotone"
+                                        dataKey="total"
+                                        stroke="#c62828"
+                                        fill="rgba(198,40,40,0.2)"
+                                    />
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        </div>
+                        <div className="chart-card">
+                            <h3>Ingresos</h3>
+                            <ResponsiveContainer width="100%" height={200}>
+                                <AreaChart data={incomeData}>
+                                    <XAxis dataKey="date" hide />
+                                    <YAxis hide />
+                                    <Tooltip />
+                                    <Area
+                                        type="monotone"
+                                        dataKey="total"
+                                        stroke="#2e7d32"
+                                        fill="rgba(46,125,50,0.2)"
+                                    />
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        </div>
+                        <div className="chart-card full">
+                            <h3>Comparativa</h3>
+                            <ResponsiveContainer width="100%" height={250}>
+                                <LineChart data={transactions}>
+                                    <XAxis dataKey="date" hide />
+                                    <YAxis hide />
+                                    <Tooltip />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="amount"
+                                        stroke="#2b2b2b"
+                                        dot={false}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
                 )}
             </div>
             <BottomNav tab={tab} setTab={setTab} />
