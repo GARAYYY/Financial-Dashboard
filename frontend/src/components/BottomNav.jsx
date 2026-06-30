@@ -6,11 +6,11 @@ import movementOultineIcon from '../img/briefcase-arrow-left-right-outline.svg'
 import movementIcon from '../img/briefcase-arrow-left-right.svg'
 import graphOutlineIncon from '../img/chart-box-outline.svg'
 import graphIcon from '../img/chart-box.svg'
+import '../styles/bottomNav.css'
 
 export default function BottomNav({ tab, setTab }) {
     return (
         <div className="bottom-nav">
-
             <button
                 className={tab === 'home' ? 'active' : ''}
                 onClick={() => setTab('home')}
@@ -21,7 +21,6 @@ export default function BottomNav({ tab, setTab }) {
                 />
                 <span className="label">Home</span>
             </button>
-
             <button
                 className={tab === 'balance' ? 'active' : ''}
                 onClick={() => setTab('balance')}
@@ -32,7 +31,6 @@ export default function BottomNav({ tab, setTab }) {
                 />
                 <span className="label">Balance</span>
             </button>
-
             <button
                 className={tab === 'transactions' ? 'active' : ''}
                 onClick={() => setTab('transactions')}
@@ -43,7 +41,6 @@ export default function BottomNav({ tab, setTab }) {
                 />
                 <span className="label">Transactions</span>
             </button>
-
             <button
                 className={tab === 'chart' ? 'active' : ''}
                 onClick={() => setTab('chart')}
@@ -53,8 +50,7 @@ export default function BottomNav({ tab, setTab }) {
                     className="icon"
                 />
                 <span className="label">Graph</span>
-            </button>
-
+            </button> 
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import '../styles/transactionForm.css'
 
 export default function TransactionForm({ onSave, onCancel, initial, categories }) {
 
@@ -10,16 +11,12 @@ export default function TransactionForm({ onSave, onCancel, initial, categories 
     )
     const [categoryId, setCategoryId] = useState(initial?.category_id || '')
 
-    // 🔄 reset category cuando cambia tipo
     useEffect(() => {
         setCategoryId('')
     }, [type])
-
     console.log(categories)
-
     const handleSubmit = (e) => {
         e.preventDefault()
-
         onSave({
             id: initial?.id,
             type,
@@ -30,14 +27,11 @@ export default function TransactionForm({ onSave, onCancel, initial, categories 
         })
     }
 
-    // 🎯 filtrar categorías por tipo
     const filteredCategories = categories?.filter(c => c.type === type) || []
 
     return (
         <form className="tx-form" onSubmit={handleSubmit}>
             <h3>{initial ? 'Editar' : 'Nueva'} transacción</h3>
-
-            {/* TYPE */}
             <div className="tx-toggle">
                 <button
                     type="button"
@@ -46,7 +40,6 @@ export default function TransactionForm({ onSave, onCancel, initial, categories 
                 >
                     Ingreso
                 </button>
-
                 <button
                     type="button"
                     className={type === 'expense' ? 'active' : ''}
@@ -55,8 +48,6 @@ export default function TransactionForm({ onSave, onCancel, initial, categories 
                     Gasto
                 </button>
             </div>
-
-            {/* AMOUNT */}
             <input
                 type="number"
                 placeholder="Cantidad"
@@ -64,50 +55,37 @@ export default function TransactionForm({ onSave, onCancel, initial, categories 
                 onChange={(e) => setAmount(e.target.value)}
                 required
             />
-
-            {/* CATEGORY 🆕 */}
             <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
                 required
             >
                 <option value="">Selecciona categoría</option>
-
                 {filteredCategories.map(c => (
                     <option key={c.id} value={c.id}>
                         {c.name}
                     </option>
                 ))}
             </select>
-
-            {/* DESCRIPTION */}
             <input
                 type="text"
                 placeholder="Descripción"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
             />
-
-            {/* DATE */}
             <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
             />
-
-            {/* ACTIONS */}
             <div className="tx-form-actions">
-
                 <button type="submit" className="primary">
                     Guardar
                 </button>
-
                 <button type="button" onClick={onCancel}>
                     Cancelar
                 </button>
-
             </div>
-
         </form>
     )
 }

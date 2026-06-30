@@ -1,0 +1,60 @@
+.tx-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.tx-form input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    outline: none;
+    font-size: 14px;
+}
+
+.tx-toggle {
+    display: flex;
+    gap: 10px;
+}
+
+.tx-toggle button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.tx-toggle button.active {
+    background: rgba(0, 0, 0, 0.15);
+    font-weight: 600;
+}
+
+.tx-form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.tx-form-actions .primary {
+    background: #2b2b2b;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tx-form-actions .primary:hover {
+    opacity: 0.9;
+}
