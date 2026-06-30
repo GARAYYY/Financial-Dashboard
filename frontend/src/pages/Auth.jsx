@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { supabase } from './utils/supabase'
-import './App.css'
+import { supabase } from '../utils/supabase'
+import '../App.css'
 
 export default function Auth() {
     const [isLogin, setIsLogin] = useState(true)

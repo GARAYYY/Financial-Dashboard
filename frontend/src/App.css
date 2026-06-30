@@ -1,4 +1,3 @@
-/* ===== RESET ===== */
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +5,6 @@
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* ===== BACKGROUND ===== */
 html, #root, body {
   min-height: 100vh;
   display: flex;
@@ -14,14 +12,14 @@ html, #root, body {
   align-items: center;
   background: linear-gradient(
     135deg,
-    #f5f5f5 0%,
-    #cfcfcf 30%,
-    #4a4a4a 70%,
-    #1a1a1a 100%
+    #f7f7f7 0%,
+    #e6e6e6 40%,
+    #cfcfcf 100%
   );
+  color: #2b2b2b;
   overflow: hidden;
 }
-
+/*  LOGIN */
 .auth-container {
   width: 100%;
   max-width: none;
@@ -104,4 +102,91 @@ html, #root, body {
 .auth-toggle:hover {
   color: white;
   transform: scale(1.05);
+}
+
+/*  BOTTOM NAV */
+.dashboard {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: transparent;
+}
+
+/* contenido central */
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 500;
+  color: #3a3a3a;
+  padding: 20px;
+}
+
+/* bottom nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  overflow: visible;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.05);
+}
+
+.bottom-nav button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+
+  color: #8a8a8a;
+
+  transition: all 0.25s ease;
+
+  position: relative;
+}
+
+.bottom-nav button .icon{
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+
+
+.bottom-nav button:hover {
+  color: #3a3a3a;
+  transform: translateY(-1px);
+}
+
+.bottom-nav button.active {
+  background: rgba(255, 255, 255);
+
+  color: #1f1f1f;
+  font-weight: 600;
+
+  height: calc(100% + 10px); /* 👈 ocupa más que el navbar */
+
+  margin-top: -10px; /* 👈 sobresale hacia arriba */
+
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+
+  box-shadow:
+    0 -6px 12px rgba(0, 0, 0, 0.06);
 }
