@@ -6,6 +6,7 @@ import TransactionForm from '../components/TransactionForm'
 import '../styles/dashboard.css'
 import '../styles/balance.css'
 import '../styles/transactions.css'
+import '../styles/homeKpis.css'
 
 export default function Dashboard({ user }) {
     const [tab, setTab] = useState('home')
@@ -43,7 +44,7 @@ export default function Dashboard({ user }) {
 
     useEffect(() => {
         fetchTransactions()
-        fetchCategories() // 🆕
+        fetchCategories()
     }, [fetchTransactions, fetchCategories])
 
     const handleCreate = async (data) => {
@@ -83,11 +84,115 @@ export default function Dashboard({ user }) {
 
     const balance = income - expenses
 
+    const now = new Date()
+    const currentMonth = now.getMonth()
+    const currentYear = now.getFullYear()
+
+    const currentMonthTransactions = transactions.filter(t => {
+        const d = new Date(t.date)
+        return d.getMonth() === currentMonth && d.getFullYear() === currentYear
+    })
+
+    const monthlyIncome = currentMonthTransactions
+        .filter(t => t.type === 'income')
+        .reduce((acc, t) => acc + Number(t.amount), 0)
+
+    const monthlyExpenses = currentMonthTransactions
+        .filter(t => t.type === 'expense')
+        .reduce((acc, t) => acc + Number(t.amount), 0)
+
+    const lastTransaction = transactions[0]
+
+    const expenseByCategory = categories.map(cat => {
+        const total = transactions
+            .filter(t => t.category_id === cat.id && t.type === 'expense')
+            .reduce((acc, t) => acc + Number(t.amount), 0)
+        return { ...cat, total }
+    })
+
+    const getMonthKey = (date) => {
+        const d = new Date(date)
+        return `${d.getFullYear()}-${d.getMonth()}`
+    }
+
+    const expensesByMonth = transactions.reduce((acc, t) => {
+        if (t.type !== 'expense') return acc
+        const key = getMonthKey(t.date)
+        acc[key] = (acc[key] || 0) + Number(t.amount)
+        return acc
+    }, {})
+
+    const months = Object.keys(expensesByMonth).sort()
+
+    const currentMonthKey = months[months.length - 1]
+    const previousMonthKey = months[months.length - 2]
+
+    const currentMonthExpenses = expensesByMonth[currentMonthKey] || 0
+    const previousMonthExpenses = expensesByMonth[previousMonthKey] || 0
+
+    let expenseChangePercent = 0
+
+    if (previousMonthExpenses > 0) {
+        expenseChangePercent =
+            ((currentMonthExpenses - previousMonthExpenses) /
+                previousMonthExpenses) * 100
+    }
+
+    const topCategory = expenseByCategory.sort((a, b) => b.total - a.total)[0]
+
     return (
         <div className="dashboard">
             <div className="content">
                 {tab === 'home' && (
-                    <h2>🏠 Home</h2>
+                    <div className="home">
+                        <div className="insight-card">
+                            {previousMonthExpenses === 0 ? (
+                                <p className="insight-text">
+                                    No hay datos suficientes para comparar meses
+                                </p>
+                            ) : (
+                                <p className="insight-text">
+                                    {expenseChangePercent > 0 ? '⚠️' : '📉'} Has gastado{' '}
+                                    <strong>
+                                        {Math.abs(expenseChangePercent).toFixed(0)}%
+                                    </strong>{' '}
+                                    {expenseChangePercent > 0 ? 'más' : 'menos'} que el mes pasado
+                                </p>
+                            )}
+                        </div>
+                        <div className="kpi-row">
+                            <div className="kpi-card">
+                                <span className="kpi-label">Balance</span>
+                                <span className="kpi-value">{balance.toFixed(2)} €</span>
+                            </div>
+                            <div className="kpi-card">
+                                <span className="kpi-label">Ingresos (mes)</span>
+                                <span className="kpi-value">{monthlyIncome.toFixed(2)} €</span>
+                            </div>
+                        </div>
+                        <div className="kpi-row">
+                            <div className="kpi-card">
+                                <span className="kpi-label">Gastos (mes)</span>
+                                <span className="kpi-value">{monthlyExpenses.toFixed(2)} €</span>
+                            </div>
+                            <div className="kpi-card">
+                                <span className="kpi-label">Último movimiento</span>
+                                <span className="kpi-sub">
+                                    {lastTransaction?.description || 'Sin datos'}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="kpi-card full">
+                            <span className="kpi-label">Top categoría</span>
+                            <span className="kpi-value">
+                                {topCategory?.name || '—'}
+                            </span>
+                            <span className="kpi-sub">
+                                {topCategory?.total?.toFixed(2) || 0} €
+                            </span>
+                        </div>
+                    </div>
                 )}
                 {tab === 'balance' && (
                     <div className="balance-card">
@@ -110,7 +215,6 @@ export default function Dashboard({ user }) {
                                 +
                             </button>
                         )}
-                        {/* LISTA */}
                         {mode === 'list' && (
                             <TransactionList
                                 transactions={transactions}
@@ -122,7 +226,6 @@ export default function Dashboard({ user }) {
                                 onDelete={handleDelete}
                             />
                         )}
-                        {/* CREAR */}
                         {mode === 'create' && (
                             <TransactionForm
                                 categories={categories} // 🆕
@@ -130,7 +233,6 @@ export default function Dashboard({ user }) {
                                 onCancel={() => setMode('list')}
                             />
                         )}
-                        {/* EDITAR */}
                         {mode === 'edit' && (
                             <TransactionForm
                                 categories={categories} // 🆕
