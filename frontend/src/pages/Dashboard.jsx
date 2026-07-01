@@ -117,13 +117,6 @@ export default function Dashboard({ user }) {
 
     const lastTransaction = transactions[0]
 
-    const expenseByCategory = categories.map(cat => {
-        const total = transactions
-            .filter(t => t.category_id === cat.id && t.type === 'expense')
-            .reduce((acc, t) => acc + Number(t.amount), 0)
-        return { ...cat, total }
-    })
-
     const getMonthKey = (date) => {
         const d = new Date(date)
         return `${d.getFullYear()}-${d.getMonth()}`
@@ -177,6 +170,33 @@ export default function Dashboard({ user }) {
             }
             return acc
         }, [])
+
+    const groupByCategory = (type) => {
+        const map = {}
+        transactions
+            .filter(t => t.type === type)
+            .forEach(t => {
+                const key = t.category_id || 'otros'
+                map[key] = (map[key] || 0) + Number(t.amount)
+            })
+        return Object.entries(map).map(([category_id, total]) => {
+            const category = categories.find(c => c.id == category_id)
+            return {
+                name: category?.name || 'Otros',
+                value: total
+            }
+        })
+    }
+
+    const expenseByCategory = groupByCategory('expense')
+    const incomeByCategory = groupByCategory('income')
+
+    const sortedTransactions = [...transactions].sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+    )
+
+    const COLORS = ['#c62828', '#ef5350', '#ff8a80', '#ffcdd2']
+    const INCOME_COLORS = ['#2e7d32', '#66bb6a', '#a5d6a7', '#d0f0c0']
 
     const topCategory = expenseByCategory.sort((a, b) => b.total - a.total)[0]
 
@@ -258,7 +278,7 @@ export default function Dashboard({ user }) {
                         {mode === 'list' && (
                             <TransactionList
                                 transactions={transactions}
-                                categories={categories} // 🆕
+                                categories={categories}
                                 onEdit={(t) => {
                                     setEditing(t)
                                     setMode('edit')
@@ -268,14 +288,14 @@ export default function Dashboard({ user }) {
                         )}
                         {mode === 'create' && (
                             <TransactionForm
-                                categories={categories} // 🆕
+                                categories={categories}
                                 onSave={handleCreate}
                                 onCancel={() => setMode('list')}
                             />
                         )}
                         {mode === 'edit' && (
                             <TransactionForm
-                                categories={categories} // 🆕
+                                categories={categories}
                                 initial={editing}
                                 onSave={handleUpdate}
                                 onCancel={() => {
@@ -290,43 +310,106 @@ export default function Dashboard({ user }) {
                     <div className="chart-grid">
                         <div className="chart-card">
                             <h3>Gastos</h3>
-                            <ResponsiveContainer width="100%" height={200}>
-                                <AreaChart data={expenseData}>
-                                    <XAxis dataKey="date" hide />
-                                    <YAxis hide />
-                                    <Tooltip />
-                                    <Area
-                                        type="monotone"
-                                        dataKey="total"
-                                        stroke="#c62828"
-                                        fill="rgba(198,40,40,0.2)"
-                                    />
-                                </AreaChart>
-                            </ResponsiveContainer>
+                            <div className="chart-card horizontal">
+                                <div className="chart-left">
+                                    <ResponsiveContainer width="100%" height={160}>
+                                        <PieChart>
+                                            <Pie
+                                                data={expenseByCategory}
+                                                dataKey="value"
+                                                nameKey="name"
+                                                innerRadius="60%"
+                                                outerRadius="85%"
+                                                paddingAngle={2}
+                                                isAnimationActive={false}
+                                            >
+                                                {expenseByCategory.map((entry, index) => (
+                                                    <Cell
+                                                        key={index}
+                                                        fill={COLORS[index % COLORS.length]}
+                                                    />
+                                                ))}
+                                            </Pie>
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                </div>
+
+                                <div className="chart-right">
+                                    {expenseByCategory.map((item, index) => (
+                                        <div key={index} className="legend-item">
+                                            <div
+                                                className="legend-color"
+                                                style={{ background: COLORS[index % COLORS.length] }}
+                                            />
+                                            <div className="legend-info">
+                                                <span className="legend-name">{item.name}</span>
+                                                <span className="legend-value">
+                                                    €{item.value.toFixed(2)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
+
+                        {/* 🍩 INGRESOS */}
                         <div className="chart-card">
                             <h3>Ingresos</h3>
-                            <ResponsiveContainer width="100%" height={200}>
-                                <AreaChart data={incomeData}>
-                                    <XAxis dataKey="date" hide />
-                                    <YAxis hide />
-                                    <Tooltip />
-                                    <Area
-                                        type="monotone"
-                                        dataKey="total"
-                                        stroke="#2e7d32"
-                                        fill="rgba(46,125,50,0.2)"
-                                    />
-                                </AreaChart>
-                            </ResponsiveContainer>
+
+                            <div className="chart-card horizontal">
+                                <div className="chart-left">
+                                    <ResponsiveContainer width="100%" height={160}>
+                                        <PieChart>
+                                            <Pie
+                                                data={expenseByCategory}
+                                                dataKey="value"
+                                                nameKey="name"
+                                                innerRadius="60%"
+                                                outerRadius="85%"
+                                                paddingAngle={2}
+                                                isAnimationActive={false}
+                                            >
+                                                {expenseByCategory.map((entry, index) => (
+                                                    <Cell
+                                                        key={index}
+                                                        fill={INCOME_COLORS[index % INCOME_COLORS.length]}
+                                                    />
+                                                ))}
+                                            </Pie>
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                </div>
+
+                                <div className="chart-right">
+                                    {expenseByCategory.map((item, index) => (
+                                        <div key={index} className="legend-item">
+                                            <div
+                                                className="legend-color"
+                                                style={{ background: INCOME_COLORS[index % INCOME_COLORS.length] }}
+                                            />
+                                            <div className="legend-info">
+                                                <span className="legend-name">{item.name}</span>
+                                                <span className="legend-value">
+                                                    €{item.value.toFixed(2)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
+
+                        {/* 📈 COMPARATIVA */}
                         <div className="chart-card full">
                             <h3>Comparativa</h3>
+
                             <ResponsiveContainer width="100%" height={250}>
-                                <LineChart data={transactions}>
-                                    <XAxis dataKey="date" hide />
+                                <LineChart data={sortedTransactions}>
+                                    <XAxis dataKey="date" reversed /> {/* 🔥 CLAVE */}
                                     <YAxis hide />
                                     <Tooltip />
+
                                     <Line
                                         type="monotone"
                                         dataKey="amount"
@@ -336,6 +419,7 @@ export default function Dashboard({ user }) {
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
+
                     </div>
                 )}
             </div>

@@ -1,9 +1,57 @@
 .chart-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 12px;
     width: 100%;
     max-width: 600px;
+    height: 100%;
+}
+
+.chart-card.horizontal {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.chart-left {
+    width: 45%;
+    min-width: 140px;
+}
+
+.chart-right {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.legend-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 12px;
+}
+
+.legend-name {
+    color: #555;
+}
+
+.legend-value {
+    font-weight: 600;
+    color: #2b2b2b;
 }
 
 .chart-card {
@@ -15,11 +63,13 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: center;
 }
 
 .chart-card h3 {
-    font-size: 12px;
-    color: #666;
+    font-size: 13px;
+    color: #444;
+    font-weight: 600;
 }
 
 .chart-card.full {
