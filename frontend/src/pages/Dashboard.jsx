@@ -358,7 +358,7 @@ export default function Dashboard({ user }) {
                                     <ResponsiveContainer width="100%" height={160}>
                                         <PieChart>
                                             <Pie
-                                                data={expenseByCategory}
+                                                data={incomeByCategory}
                                                 dataKey="value"
                                                 nameKey="name"
                                                 innerRadius="60%"
@@ -366,7 +366,7 @@ export default function Dashboard({ user }) {
                                                 paddingAngle={2}
                                                 isAnimationActive={false}
                                             >
-                                                {expenseByCategory.map((entry, index) => (
+                                                {incomeByCategory.map((entry, index) => (
                                                     <Cell
                                                         key={index}
                                                         fill={INCOME_COLORS[index % INCOME_COLORS.length]}
@@ -377,7 +377,7 @@ export default function Dashboard({ user }) {
                                     </ResponsiveContainer>
                                 </div>
                                 <div className="chart-right">
-                                    {expenseByCategory.map((item, index) => (
+                                    {incomeByCategory.map((item, index) => (
                                         <div key={index} className="legend-item">
                                             <div
                                                 className="legend-color"
@@ -393,22 +393,6 @@ export default function Dashboard({ user }) {
                                     ))}
                                 </div>
                             </div>
-                        </div>
-                        <div className="chart-card full">
-                            <h3>Comparativa</h3>
-                            <ResponsiveContainer width="100%" height={250}>
-                                <LineChart data={sortedTransactions}>
-                                    <XAxis dataKey="date" hide />
-                                    <YAxis hide />
-                                    <Tooltip />
-                                    <Line
-                                        type="monotone"
-                                        dataKey="amount"
-                                        stroke="#2b2b2b"
-                                        dot={false}
-                                    />
-                                </LineChart>
-                            </ResponsiveContainer>
                         </div>
                     </div>
                 )}

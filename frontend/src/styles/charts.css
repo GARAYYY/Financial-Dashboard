@@ -71,7 +71,3 @@
     color: #444;
     font-weight: 600;
 }
-
-.chart-card.full {
-    grid-column: span 2;
-}
