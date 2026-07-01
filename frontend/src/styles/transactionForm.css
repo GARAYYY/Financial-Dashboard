@@ -9,6 +9,7 @@
     backdrop-filter: blur(12px);
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    margin-top: 200px;
 }
 
 .tx-form input {
@@ -56,5 +57,19 @@
 }
 
 .tx-form-actions .primary:hover {
+    opacity: 0.9;
+}
+
+.tx-form-actions .secondary {
+    background: transparent;
+    color: #2b2b2b;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tx-form-actions .secondary:hover {
     opacity: 0.9;
 }

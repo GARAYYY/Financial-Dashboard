@@ -16,4 +16,10 @@
     font-weight: 500;
     color: #3a3a3a;
     padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.transactions{
+    height: 100%;
 }

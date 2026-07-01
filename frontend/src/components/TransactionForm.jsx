@@ -82,7 +82,7 @@ export default function TransactionForm({ onSave, onCancel, initial, categories 
                 <button type="submit" className="primary">
                     Guardar
                 </button>
-                <button type="button" onClick={onCancel}>
+                <button type="button" className="secondary" onClick={onCancel}>
                     Cancelar
                 </button>
             </div>
