@@ -19,7 +19,7 @@ export default function BottomNav({ tab, setTab }) {
                     src={tab === 'home' ? homeIcon : homeOutlineIcon}
                     className="icon"
                 />
-                <span className="label">Home</span>
+                <span className="label">Inicio</span>
             </button>
             <button
                 className={tab === 'balance' ? 'active' : ''}
@@ -39,7 +39,7 @@ export default function BottomNav({ tab, setTab }) {
                     src={tab === 'transactions' ? movementIcon : movementOultineIcon}
                     className="icon"
                 />
-                <span className="label">Transactions</span>
+                <span className="label">Movimientos</span>
             </button>
             <button
                 className={tab === 'chart' ? 'active' : ''}
@@ -49,7 +49,7 @@ export default function BottomNav({ tab, setTab }) {
                     src={tab === 'chart' ? graphIcon : graphOutlineIncon}
                     className="icon"
                 />
-                <span className="label">Graph</span>
+                <span className="label">Gr&aacute;ficos</span>
             </button> 
         </div>
     )
