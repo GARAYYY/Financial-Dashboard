@@ -195,8 +195,30 @@ export default function Dashboard({ user }) {
         (a, b) => new Date(a.date) - new Date(b.date)
     )
 
-    const COLORS = ['#c62828', '#ef5350', '#ff8a80', '#ffcdd2']
-    const INCOME_COLORS = ['#2e7d32', '#66bb6a', '#a5d6a7', '#d0f0c0']
+    const COLORS = [
+        '#b71c1c', // rojo oscuro
+        '#d32f2f',
+        '#f44336',
+        '#ff7043', // rojo-naranja
+        '#ff9800', // naranja fuerte
+        '#ffb74d',
+        '#f06292', // rosa fuerte (rompe monotonía)
+        '#ab47bc', // morado
+        '#6a1b9a', // púrpura oscuro
+        '#4e342e'  // marrón oscuro (cierre visual)
+    ]
+    const INCOME_COLORS = [
+        '#1b5e20', // verde oscuro
+        '#2e7d32',
+        '#388e3c',
+        '#43a047',
+        '#4caf50',
+        '#66bb6a',
+        '#81c784',
+        '#26a69a', // verde azulado (teal)
+        '#009688', // teal fuerte
+        '#00bcd4'  // cian (rompe monotonía)
+    ]
 
     const topCategory = expenseByCategory.sort((a, b) => b.total - a.total)[0]
 
