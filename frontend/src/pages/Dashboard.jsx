@@ -333,7 +333,6 @@ export default function Dashboard({ user }) {
                                         </PieChart>
                                     </ResponsiveContainer>
                                 </div>
-
                                 <div className="chart-right">
                                     {expenseByCategory.map((item, index) => (
                                         <div key={index} className="legend-item">
@@ -352,11 +351,8 @@ export default function Dashboard({ user }) {
                                 </div>
                             </div>
                         </div>
-
-                        {/* 🍩 INGRESOS */}
                         <div className="chart-card">
                             <h3>Ingresos</h3>
-
                             <div className="chart-card horizontal">
                                 <div className="chart-left">
                                     <ResponsiveContainer width="100%" height={160}>
@@ -380,7 +376,6 @@ export default function Dashboard({ user }) {
                                         </PieChart>
                                     </ResponsiveContainer>
                                 </div>
-
                                 <div className="chart-right">
                                     {expenseByCategory.map((item, index) => (
                                         <div key={index} className="legend-item">
@@ -399,17 +394,13 @@ export default function Dashboard({ user }) {
                                 </div>
                             </div>
                         </div>
-
-                        {/* 📈 COMPARATIVA */}
                         <div className="chart-card full">
                             <h3>Comparativa</h3>
-
                             <ResponsiveContainer width="100%" height={250}>
                                 <LineChart data={sortedTransactions}>
-                                    <XAxis dataKey="date" reversed /> {/* 🔥 CLAVE */}
+                                    <XAxis dataKey="date" hide />
                                     <YAxis hide />
                                     <Tooltip />
-
                                     <Line
                                         type="monotone"
                                         dataKey="amount"
@@ -419,7 +410,6 @@ export default function Dashboard({ user }) {
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
-
                     </div>
                 )}
             </div>
