@@ -6,6 +6,8 @@ import movementOultineIcon from '../img/briefcase-arrow-left-right-outline.svg'
 import movementIcon from '../img/briefcase-arrow-left-right.svg'
 import graphOutlineIncon from '../img/chart-box-outline.svg'
 import graphIcon from '../img/chart-box.svg'
+import accountOutlineIcon from '../img/account-settings-outline.svg'
+import accountIcon from '../img/account-settings.svg'
 import '../styles/bottomNav.css'
 
 export default function BottomNav({ tab, setTab }) {
@@ -50,6 +52,16 @@ export default function BottomNav({ tab, setTab }) {
                     className="icon"
                 />
                 <span className="label">Gr&aacute;ficos</span>
+            </button>
+            <button
+                className={tab === 'account' ? 'active' : ''}
+                onClick={() => setTab('account')}
+            >
+                <img
+                    src={tab === 'account' ? accountIcon : accountOutlineIcon}
+                    className="icon"
+                />
+                <span className="label">Cuenta</span>
             </button> 
         </div>
     )

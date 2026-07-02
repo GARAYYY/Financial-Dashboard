@@ -3,6 +3,7 @@ import { supabase } from '../utils/supabase'
 import BottomNav from '../components/BottomNav'
 import TransactionList from '../components/TransactionList'
 import TransactionForm from '../components/TransactionForm'
+import Account from '../components/Account'
 import '../styles/dashboard.css'
 import '../styles/balance.css'
 import '../styles/transactions.css'
@@ -416,6 +417,12 @@ export default function Dashboard({ user }) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                )}
+                {tab === 'account' && <Account setTab={setTab} />}
+                {tab === 'settings' && (
+                    <div className="settings">
+                        <h1>AJUSTES</h1>
                     </div>
                 )}
             </div>
