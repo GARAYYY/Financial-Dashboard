@@ -125,6 +125,38 @@
     transform: scale(0.95);
 }
 
+.account-back-floating {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+.account-back-floating img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.8;
+}
+
+.account-back-floating:hover {
+    transform: scale(1.1);
+}
+
+.account-back-floating:active {
+    transform: scale(0.95);
+}
+
 /* DARK MODE */
 body.dark .account-grid {
     position: relative;
@@ -251,5 +283,37 @@ body.dark .account-settings-floating:hover {
 }
 
 body.dark .account-settings-floating:active {
+    transform: scale(0.95);
+}
+
+body.dark .account-back-floating {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(30, 30, 30);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+body.dark .account-back-floating img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.8;
+}
+
+body.dark .account-back-floating:hover {
+    transform: scale(1.1);
+}
+
+body.dark .account-back-floating:active {
     transform: scale(0.95);
 }

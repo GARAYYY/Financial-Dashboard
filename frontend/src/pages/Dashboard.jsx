@@ -30,7 +30,9 @@ export default function Dashboard({ user }) {
     const [categories, setCategories] = useState([])
     const [mode, setMode] = useState('list')
     const [editing, setEditing] = useState(null)
-    const [darkMode, setDarkMode] = useState(false)
+    const [darkMode, setDarkMode] = useState(() => {
+        return localStorage.getItem("darkMode") === "true";
+    });
 
     const fetchTransactions = useCallback(async () => {
         if (!user) return
@@ -62,11 +64,12 @@ export default function Dashboard({ user }) {
     useEffect(() => {
         fetchTransactions()
         fetchCategories()
-        if(darkMode){
+        if (darkMode) {
             document.body.classList.add('dark')
-        }else{
+        } else {
             document.body.classList.remove('dark')
         }
+        localStorage.setItem("darkMode", darkMode ? "true" : "false");
     }, [fetchTransactions, fetchCategories, darkMode])
 
     const handleCreate = async (data) => {
@@ -427,9 +430,10 @@ export default function Dashboard({ user }) {
                     </div>
                 )}
                 {tab === 'account' && <Account setTab={setTab} />}
-                {tab === 'settings' && <Config 
+                {tab === 'settings' && <Config
                     darkMode={darkMode}
                     setDarkMode={setDarkMode}
+                    setTab={setTab}
                 />}
             </div>
             <BottomNav tab={tab} setTab={setTab} />
