@@ -4,6 +4,7 @@ import BottomNav from '../components/BottomNav'
 import TransactionList from '../components/TransactionList'
 import TransactionForm from '../components/TransactionForm'
 import Account from '../components/Account'
+import Config from '../components/Config'
 import '../styles/dashboard.css'
 import '../styles/balance.css'
 import '../styles/transactions.css'
@@ -29,6 +30,7 @@ export default function Dashboard({ user }) {
     const [categories, setCategories] = useState([])
     const [mode, setMode] = useState('list')
     const [editing, setEditing] = useState(null)
+    const [darkMode, setDarkMode] = useState(false)
 
     const fetchTransactions = useCallback(async () => {
         if (!user) return
@@ -60,7 +62,12 @@ export default function Dashboard({ user }) {
     useEffect(() => {
         fetchTransactions()
         fetchCategories()
-    }, [fetchTransactions, fetchCategories])
+        if(darkMode){
+            document.body.classList.add('dark')
+        }else{
+            document.body.classList.remove('dark')
+        }
+    }, [fetchTransactions, fetchCategories, darkMode])
 
     const handleCreate = async (data) => {
         await supabase.from('transactions').insert({
@@ -279,7 +286,7 @@ export default function Dashboard({ user }) {
                 )}
                 {tab === 'balance' && (
                     <div className="balance-card">
-                        <h2>💰 Balance total</h2>
+                        <h2>Balance total</h2>
                         <p>Ingresos: <strong>{income.toFixed(2)} €</strong></p>
                         <p>Gastos: <strong>{expenses.toFixed(2)} €</strong></p>
                         <hr />
@@ -420,11 +427,10 @@ export default function Dashboard({ user }) {
                     </div>
                 )}
                 {tab === 'account' && <Account setTab={setTab} />}
-                {tab === 'settings' && (
-                    <div className="settings">
-                        <h1>AJUSTES</h1>
-                    </div>
-                )}
+                {tab === 'settings' && <Config 
+                    darkMode={darkMode}
+                    setDarkMode={setDarkMode}
+                />}
             </div>
             <BottomNav tab={tab} setTab={setTab} />
         </div>

@@ -24,3 +24,31 @@
 .transactions{
     height: 90%;
 }
+
+/* DARK MODE */
+body.dark .dashboard {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: transparent;
+}
+
+body.dark .content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 500;
+    color: #e7e7e7;
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+    margin-bottom: 80px;
+}
+
+body.dark .transactions{
+    height: 90%;
+}

@@ -9,9 +9,39 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
+.balance-card h2{
+    margin: 10px 0;
+}
+
 .balance-card p {
     margin: 8px 0;
     color: #444;
+}
+
+.balance-card .total {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+/* DARK MODE */
+body.dark .balance-card {
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(12px);
+    padding: 24px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.balance-card h2{
+    margin: 10px 0;
+    color: #e7e7e7
+}
+body.dark .balance-card p {
+    margin: 8px 0;
+    color: #e7e7e7;
 }
 
 .balance-card .total {

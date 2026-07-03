@@ -53,3 +53,23 @@
     box-shadow:
         0 -6px 12px rgba(0, 0, 0, 0.06);
 }
+
+/* DARK MODE */
+body.dark .bottom-nav {
+    background: rgba(30, 30, 30, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.05);
+}
+
+body.dark .bottom-nav button {
+    color: #8a8a8a;
+}
+
+body.dark .bottom-nav button:hover {
+    color: #e7e7e7;
+}
+
+body.dark .bottom-nav button.active {
+    background: rgba(30, 30, 30);
+    color: #e7e7e7;
+}

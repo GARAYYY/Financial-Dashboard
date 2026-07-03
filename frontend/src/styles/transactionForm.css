@@ -20,6 +20,16 @@
     font-size: 14px;
 }
 
+.tx-form select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: white;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 .tx-toggle {
     display: flex;
     gap: 10px;
@@ -72,4 +82,105 @@
 
 .tx-form-actions .secondary:hover {
     opacity: 0.9;
+}
+
+.tx-form h3{
+    color: black;
+    margin: 10px 0;
+}
+
+/* DARK MODE */
+body.dark .tx-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background: rgba(30, 30, 30, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    margin-top: 200px;
+}
+
+body.dark .tx-form input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    outline: none;
+    font-size: 14px;
+    background: #444;
+    color: #e7e7e7;
+}
+
+body.dark .tx-form select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #444;
+    color: #e7e7e7;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+body.dark .tx-toggle {
+    display: flex;
+    gap: 10px;
+}
+
+body.dark .tx-toggle button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #333;
+    transition: all 0.2s ease;
+    color: #e7e7e7;
+}
+
+body.dark .tx-toggle button.active {
+    background: #222;
+    font-weight: 600;
+}
+
+body.dark .tx-form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+body.dark .tx-form-actions .primary {
+    background: #e7e7e7;
+    color: #333;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+body.dark .tx-form-actions .primary:hover {
+    opacity: 0.9;
+}
+
+body.dark .tx-form-actions .secondary {
+    background: transparent;
+    color: #e7e7e7;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+body.dark .tx-form-actions .secondary:hover {
+    opacity: 0.9;
+}
+
+body.dark .tx-form h3{
+    color: #e7e7e7;
+    margin: 10px 0;
 }

@@ -1,16 +1,46 @@
 import homeOutlineIcon from '../img/home-outline.svg'
 import homeIcon from '../img/home.svg'
+import darkHomeOutlineIcon from '../img/home-outline-custom.png'
+import darkHomeIcon from '../img/home-custom.png'
 import balanceOutlineIcon from '../img/wallet-outline.svg'
 import balanceIcon from '../img/wallet.svg'
-import movementOultineIcon from '../img/briefcase-arrow-left-right-outline.svg'
+import darkBalanceOutlineIcon from '../img/wallet-outline-custom.png'
+import darkBalanceIcon from '../img/wallet-custom.png'
+import movementOutlineIcon from '../img/briefcase-arrow-left-right-outline.svg'
 import movementIcon from '../img/briefcase-arrow-left-right.svg'
-import graphOutlineIncon from '../img/chart-box-outline.svg'
+import darkMovementOutlineIcon from '../img/briefcase-arrow-left-right-outline-custom.png'
+import darkMovementIcon from '../img/briefcase-arrow-left-right-custom.png'
+import graphOutlineIcon from '../img/chart-box-outline.svg'
 import graphIcon from '../img/chart-box.svg'
+import darkGraphOutlineIcon from '../img/chart-box-outline-custom.png'
+import darkGraphIcon from '../img/chart-box-custom.png'
 import accountOutlineIcon from '../img/account-settings-outline.svg'
 import accountIcon from '../img/account-settings.svg'
+import darkAccountOutlineIcon from '../img/account-settings-outline-custom.png'
+import darkAccountIcon from '../img/account-settings-custom.png'
 import '../styles/bottomNav.css'
+import { useEffect, useState } from "react";
 
 export default function BottomNav({ tab, setTab }) {
+    const [isDark, setIsDark] = useState(false);
+
+    useEffect(() => {
+        const checkDark = () => {
+            setIsDark(document.body.classList.contains("dark"));
+        };
+
+        checkDark();
+
+        const observer = new MutationObserver(checkDark);
+
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <div className="bottom-nav">
             <button
@@ -18,7 +48,11 @@ export default function BottomNav({ tab, setTab }) {
                 onClick={() => setTab('home')}
             >
                 <img
-                    src={tab === 'home' ? homeIcon : homeOutlineIcon}
+                    src={
+                        tab === 'home'
+                            ? (isDark ? darkHomeIcon : homeIcon)
+                            : (isDark ? darkHomeOutlineIcon : homeOutlineIcon)
+                    }
                     className="icon"
                 />
                 <span className="label">Inicio</span>
@@ -28,7 +62,11 @@ export default function BottomNav({ tab, setTab }) {
                 onClick={() => setTab('balance')}
             >
                 <img
-                    src={tab === 'balance' ? balanceIcon : balanceOutlineIcon}
+                    src={
+                        tab === 'balance'
+                            ? (isDark ? darkBalanceIcon : balanceIcon)
+                            : (isDark ? darkBalanceOutlineIcon : balanceOutlineIcon)
+                    }
                     className="icon"
                 />
                 <span className="label">Balance</span>
@@ -38,7 +76,11 @@ export default function BottomNav({ tab, setTab }) {
                 onClick={() => setTab('transactions')}
             >
                 <img
-                    src={tab === 'transactions' ? movementIcon : movementOultineIcon}
+                    src={
+                        tab === 'transactions'
+                            ? (isDark ? darkMovementIcon : movementIcon)
+                            : (isDark ? darkMovementOutlineIcon : movementOutlineIcon)
+                    }
                     className="icon"
                 />
                 <span className="label">Movimientos</span>
@@ -48,7 +90,11 @@ export default function BottomNav({ tab, setTab }) {
                 onClick={() => setTab('chart')}
             >
                 <img
-                    src={tab === 'chart' ? graphIcon : graphOutlineIncon}
+                    src={
+                        tab === 'chart'
+                            ? (isDark ? darkGraphIcon : graphIcon)
+                            : (isDark ? darkGraphOutlineIcon : graphOutlineIcon)
+                    }
                     className="icon"
                 />
                 <span className="label">Gr&aacute;ficos</span>
@@ -58,11 +104,15 @@ export default function BottomNav({ tab, setTab }) {
                 onClick={() => setTab('account')}
             >
                 <img
-                    src={tab === 'account' ? accountIcon : accountOutlineIcon}
+                    src={
+                        tab === 'account'
+                            ? (isDark ? darkAccountIcon : accountIcon)
+                            : (isDark ? darkAccountOutlineIcon : accountOutlineIcon)
+                    }
                     className="icon"
                 />
                 <span className="label">Cuenta</span>
-            </button> 
+            </button>
         </div>
     )
 }

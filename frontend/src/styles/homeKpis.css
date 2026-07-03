@@ -60,3 +60,67 @@
     color: #333;
     line-height: 1.4;
 }
+
+/* DARK MODE */
+body.dark .home {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 500px;
+}
+
+body.dark .kpi-row {
+    display: flex;
+    gap: 12px;
+}
+
+body.dark .kpi-card {
+    flex: 1;
+    background: rgba(30, 30, 30, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+body.dark .kpi-card.full {
+    width: 100%;
+}
+
+body.dark .kpi-label {
+    font-size: 11px;
+    color: #e7e7e7;
+    letter-spacing: 0.4px;
+}
+
+body.dark .kpi-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e7e7e7;
+    margin-top: 4px;
+}
+
+body.dark .kpi-sub {
+    font-size: 12px;
+    color: #e7e7e7;
+    margin-top: 2px;
+}
+
+body.dark .insight-card {
+    background: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+body.dark .insight-text {
+    font-size: 13px;
+    color: #e7e7e7;
+    line-height: 1.4;
+}

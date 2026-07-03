@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { supabase } from '../utils/supabase'
 import "../styles/account.css";
 import cogOutlineItem from '../img/cog-outline.svg'
+import darkCogOutlineIcon from '../img/cog-outline-custom.png'
 
 export default function Account({ setTab }) {
     const [user, setUser] = useState(null);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [isDark, setIsDark] = useState(false);
 
     useEffect(() => {
         const getUser = async () => {
@@ -19,15 +21,24 @@ export default function Account({ setTab }) {
                 setName(u.user_metadata?.name || "");
             }
         };
-
         getUser();
+
+        const checkDark = () => {
+            setIsDark(document.body.classList.contains("dark"));
+        };
+        checkDark();
+        const observer = new MutationObserver(checkDark);
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+        return () => observer.disconnect();
     }, []);
 
     const handleUpdate = async () => {
         await supabase.auth.updateUser({
             data: { name }
         });
-
         alert("Perfil actualizado");
     };
 
@@ -35,7 +46,6 @@ export default function Account({ setTab }) {
         await supabase.auth.resetPasswordForEmail(email, {
             redirectTo: window.location.origin + "/reset-password"
         });
-
         alert("Revisa tu email");
     };
 
@@ -47,7 +57,10 @@ export default function Account({ setTab }) {
                 className="account-settings-floating"
                 onClick={() => setTab('settings')}
             >
-                <img src={cogOutlineItem} alt="settings" />
+                <img
+                    src={isDark ? darkCogOutlineIcon : cogOutlineItem}
+                    alt="settings"
+                />
             </button>
             <div className="account-card">
                 <div className="account-header">
