@@ -23,6 +23,11 @@
     z-index: 999;
 }
 
+.fab:hover {
+    transform: translateX(-50%) scale(1.08);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
 @keyframes popIn {
     from {
         transform: translateX(-50%) scale(0.6);
@@ -34,10 +39,39 @@
     }
 }
 
-.fab:hover {
-    transform: translateX(-50%) scale(1.08);
-    box-shadow:
-        0 14px 30px rgba(0, 0, 0, 0.18);
+.tx-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.tx-search {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.tx-filters {
+    display: flex;
+    gap: 8px;
+}
+
+.tx-filters select {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    font-size: 12px;
+    cursor: pointer;
 }
 
 .tx-list {
@@ -45,7 +79,6 @@
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    max-width: 500px;
 }
 
 .tx-item {
@@ -100,24 +133,6 @@
     gap: 8px;
 }
 
-.tx-actions button {
-    background: rgba(0, 0, 0, 0.05);
-    border: none;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.tx-actions button:hover {
-    background: rgba(0, 0, 0, 0.12);
-    transform: scale(1.05);
-}
-
 .icon-btn {
     position: relative;
     width: 34px;
@@ -145,93 +160,43 @@
     position: absolute;
     width: 18px;
     height: 18px;
+}
+
+.icon-btn .outline {
+    opacity: 1;
     transition: opacity 0.2s ease;
 }
 
 .icon-btn .filled {
     opacity: 0;
-}
-
-.icon-btn .outline {
-    opacity: 1;
-}
-
-.icon-btn:hover .filled {
-    opacity: 1;
+    transition: opacity 0.2s ease;
 }
 
 .icon-btn:hover .outline {
     opacity: 0;
 }
 
-/* DARK MODE */
+.icon-btn:hover .filled {
+    opacity: 1;
+}
+
+.empty {
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+}
+
+/*  DARK MODE */
 body.dark .fab {
-    position: fixed;
-    bottom: 85px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: none;
     background: rgba(30, 30, 30, 0.85);
-    backdrop-filter: blur(12px);
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.12),
-        0 2px 6px rgba(0, 0, 0, 0.08);
-    font-size: 28px;
     color: #e7e7e7;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    animation: popIn 0.25s ease;
-    z-index: 999;
 }
 
-@keyframes popIn {
-    from {
-        transform: translateX(-50%) scale(0.6);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(-50%) scale(1);
-        opacity: 1;
-    }
-}
-
-body.dark .fab:hover {
-    transform: translateX(-50%) scale(1.08);
-    box-shadow:
-        0 14px 30px rgba(0, 0, 0, 0.18);
-}
-
-.tx-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 500px;
-}
-
+body.dark .tx-search,
+body.dark .tx-filters select,
 body.dark .tx-item {
     background: rgba(30, 30, 30, 0.7);
-    backdrop-filter: blur(12px);
-    min-width: 300px;
-    border-radius: 16px;
-    padding: 16px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-body.dark .tx-amount-big {
-    font-size: 28px;
-    font-weight: 700;
-    text-align: center;
-    letter-spacing: 0.5px;
+    color: #e7e7e7;
 }
 
 body.dark .tx-amount-big.income {
@@ -242,92 +207,17 @@ body.dark .tx-amount-big.expense {
     color: #da2323;
 }
 
-body.dark .tx-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-body.dark .tx-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
 body.dark .tx-title,
 body.dark .tx-date,
-body.dark .tx-category {
-    font-size: 11px;
+body.dark .tx-category,
+body.dark .empty {
     color: #e7e7e7;
-    text-align: left;
-}
-
-body.dark .tx-actions {
-    display: flex;
-    gap: 8px;
-}
-
-body.dark .tx-actions button {
-    background: rgb(100, 100, 100);
-    border: none;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-
-body.dark .tx-actions button:hover {
-    background: rgba(155, 155, 155);
-    transform: scale(1.05);
 }
 
 body.dark .icon-btn {
-    position: relative;
-    width: 34px;
-    height: 34px;
-    background: rgba(0, 0, 0, 0.05);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 body.dark .icon-btn:hover {
-    background: rgba(0, 0, 0, 0.12);
-    transform: scale(1.05);
-}
-
-body.dark .icon-btn:active {
-    transform: scale(0.92);
-}
-
-body.dark .icon-btn img {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    transition: opacity 0.2s ease;
-}
-
-body.dark .icon-btn .filled {
-    opacity: 0;
-}
-
-body.dark .icon-btn .outline {
-    opacity: 1;
-}
-
-body.dark .icon-btn:hover .filled {
-    opacity: 1;
-}
-
-body.dark .icon-btn:hover .outline {
-    opacity: 0;
+    background: rgba(255, 255, 255, 0.18);
 }
