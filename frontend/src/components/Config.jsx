@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { supabase } from "../utils/supabase";
 import '../styles/config.css'
 import arrowIcon from '../img/arrow-left.svg'
 import darkArrowIcon from '../img/arrow-left-custom.png'
@@ -7,6 +8,13 @@ import darkArrowIcon from '../img/arrow-left-custom.png'
 export default function Config({ darkMode, setDarkMode, setTab }) {
 
     const [isDark, setIsDark] = useState(false);
+
+    const handleLogout = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error("Error al cerrar sesión:", error.message);
+        }
+    };
 
     useEffect(() => {
         const checkDark = () => {
@@ -44,6 +52,12 @@ export default function Config({ darkMode, setDarkMode, setTab }) {
                     </label>
                 </div>
             </div>
+            <button
+                className="logout-button"
+                onClick={handleLogout}
+            >
+                Cerrar sesión
+            </button>
         </div>
     );
 }

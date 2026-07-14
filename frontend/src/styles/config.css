@@ -54,3 +54,52 @@
 .switch input:checked+.slider::before {
     transform: translateX(18px);
 }
+
+.logout-button {
+    margin-top: 20px;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    background-color: #ff4d4f;
+    color: white;
+
+    transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color: #e04344;
+    transform: scale(1.02);
+}
+
+.logout-button:active {
+    transform: scale(0.98);
+}
+
+/*  DARK MODE */
+body.dark .logout-button {
+    margin-top: 20px;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: rgba(30, 30, 30, 0.7);
+    color: #e7e7e7;
+    transition: all 0.2s ease;
+}
+
+body.dark .logout-button:hover {
+    background-color: #e04344;
+    transform: scale(1.02);
+}
+
+body.dark .logout-button:active {
+    transform: scale(0.98);
+}

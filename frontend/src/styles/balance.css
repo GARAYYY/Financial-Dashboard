@@ -11,6 +11,7 @@
 
 .balance-card h2{
     margin: 10px 0;
+    color: black;
 }
 
 .balance-card p {
@@ -35,7 +36,7 @@ body.dark .balance-card {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-.balance-card h2{
+body.dark .balance-card h2{
     margin: 10px 0;
     color: #e7e7e7
 }
