@@ -207,84 +207,64 @@ export default function Dashboard({ user }) {
     )
 
     const COLORS = [
-        '#b71c1c', // rojo oscuro
+        '#b71c1c',
         '#d32f2f',
         '#f44336',
-        '#ff7043', // rojo-naranja
-        '#ff9800', // naranja fuerte
+        '#ff7043',
+        '#ff9800',
         '#ffb74d',
-        '#f06292', // rosa fuerte (rompe monotonía)
-        '#ab47bc', // morado
-        '#6a1b9a', // púrpura oscuro
-        '#4e342e'  // marrón oscuro (cierre visual)
+        '#f06292',
+        '#ab47bc',
+        '#6a1b9a',
+        '#4e342e'
     ]
     const INCOME_COLORS = [
-        '#1b5e20', // verde oscuro
+        '#1b5e20',
         '#2e7d32',
         '#388e3c',
         '#43a047',
         '#4caf50',
         '#66bb6a',
         '#81c784',
-        '#26a69a', // verde azulado (teal)
-        '#009688', // teal fuerte
-        '#00bcd4'  // cian (rompe monotonía)
+        '#26a69a',
+        '#009688',
+        '#00bcd4'
     ]
 
     const topCategory = expenseByCategory.sort((a, b) => b.total - a.total)[0]
 
+    console.log('Top category:', topCategory)
     return (
         <div className="dashboard">
             <div className="content">
                 {tab === 'home' && (
                     <div className="home">
-                        <div className="insight-card">
-                            {previousMonthExpenses === 0 ? (
-                                <p className="insight-text">
-                                    No hay datos suficientes para comparar meses
-                                </p>
-                            ) : (
-                                <p className="insight-text">
-                                    {expenseChangePercent > 0 ? '⚠️' : '📉'} Has gastado{' '}
-                                    <strong>
-                                        {Math.abs(expenseChangePercent).toFixed(0)}%
-                                    </strong>{' '}
-                                    {expenseChangePercent > 0 ? 'más' : 'menos'} que el mes pasado
-                                </p>
-                            )}
+                        <div className="kpi-card balance">
+                            <span className="kpi-label">Balance</span>
+                            <span className="kpi-value">{balance.toFixed(2)} €</span>
                         </div>
-                        <div className="kpi-row">
-                            <div className="kpi-card">
-                                <span className="kpi-label">Balance</span>
-                                <span className="kpi-value">{balance.toFixed(2)} €</span>
-                            </div>
-                            <div className="kpi-card">
-                                <span className="kpi-label">Ingresos (mes)</span>
-                                <span className="kpi-value">{monthlyIncome.toFixed(2)} €</span>
-                            </div>
+                        <div className="kpi-card income">
+                            <span className="kpi-label">Ingresos (mes)</span>
+                            <span className="kpi-value">{monthlyIncome.toFixed(2)} €</span>
                         </div>
-                        <div className="kpi-row">
-                            <div className="kpi-card">
-                                <span className="kpi-label">Gastos (mes)</span>
-                                <span className="kpi-value">{monthlyExpenses.toFixed(2)} €</span>
-                            </div>
-                            <div className="kpi-card">
-                                <span className="kpi-label">Último movimiento</span>
-                                <span className="kpi-sub">
-                                    {lastTransaction?.description || 'Sin datos'}
-                                </span>
-                            </div>
+                        <div className="kpi-card expenses">
+                            <span className="kpi-label">Gastos (mes)</span>
+                            <span className="kpi-value">{monthlyExpenses.toFixed(2)} €</span>
                         </div>
-
-                        <div className="kpi-card full">
+                        <div className="kpi-card last">
+                            <span className="kpi-label">Último movimiento</span>
+                            <span className="kpi-sub">
+                                {lastTransaction?.description || 'Sin datos'}
+                            </span>
+                        </div>
+                        <div className="kpi-card category">
                             <span className="kpi-label">Top categoría</span>
                             <span className="kpi-value">
                                 {topCategory?.name || '—'}
                             </span>
                             <span className="kpi-sub">
-                                {topCategory?.total?.toFixed(2) || 0} €
-                            </span>
-                        </div>
+                                {Number(topCategory?.value || 0).toFixed(2)} €
+                            </span>                        </div>
                     </div>
                 )}
                 {tab === 'balance' && (

@@ -1,18 +1,12 @@
 .home {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     width: 100%;
     max-width: 500px;
 }
 
-.kpi-row {
-    display: flex;
-    gap: 12px;
-}
-
 .kpi-card {
-    flex: 1;
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
     border-radius: 16px;
@@ -23,8 +17,24 @@
     justify-content: center;
 }
 
-.kpi-card.full {
-    width: 100%;
+.kpi-card.balance {
+    grid-column: span 2;
+}
+
+.kpi-card.income {
+    grid-column: span 1;
+}
+
+.kpi-card.expenses {
+    grid-column: span 1;
+}
+
+.kpi-card.last {
+    grid-column: span 1;
+}
+
+.kpi-card.category {
+    grid-column: span 1;
 }
 
 .kpi-label {
@@ -46,6 +56,10 @@
     margin-top: 2px;
 }
 
+.kpi-card.balance .kpi-value {
+    font-size: 22px;
+}
+
 .insight-card {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
@@ -61,66 +75,27 @@
     line-height: 1.4;
 }
 
-/* DARK MODE */
-body.dark .home {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    max-width: 500px;
-}
-
-body.dark .kpi-row {
-    display: flex;
-    gap: 12px;
-}
-
+/*  DARK MODE  */
 body.dark .kpi-card {
-    flex: 1;
     background: rgba(30, 30, 30, 0.7);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 14px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-body.dark .kpi-card.full {
-    width: 100%;
 }
 
 body.dark .kpi-label {
-    font-size: 11px;
-    color: #e7e7e7;
-    letter-spacing: 0.4px;
+    color: #aaa;
 }
 
 body.dark .kpi-value {
-    font-size: 18px;
-    font-weight: 700;
     color: #e7e7e7;
-    margin-top: 4px;
 }
 
 body.dark .kpi-sub {
-    font-size: 12px;
-    color: #e7e7e7;
-    margin-top: 2px;
+    color: #ccc;
 }
 
 body.dark .insight-card {
     background: rgba(30, 30, 30, 0.85);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 14px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
-    text-align: center;
 }
 
 body.dark .insight-text {
-    font-size: 13px;
     color: #e7e7e7;
-    line-height: 1.4;
 }
