@@ -4,6 +4,7 @@
     gap: 12px;
     width: 100%;
     max-width: 500px;
+    overflow-y: scroll;
 }
 
 .card,
