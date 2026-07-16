@@ -2,10 +2,6 @@ import homeOutlineIcon from '../img/home-outline.svg'
 import homeIcon from '../img/home.svg'
 import darkHomeOutlineIcon from '../img/home-outline-custom.png'
 import darkHomeIcon from '../img/home-custom.png'
-import balanceOutlineIcon from '../img/wallet-outline.svg'
-import balanceIcon from '../img/wallet.svg'
-import darkBalanceOutlineIcon from '../img/wallet-outline-custom.png'
-import darkBalanceIcon from '../img/wallet-custom.png'
 import movementOutlineIcon from '../img/briefcase-arrow-left-right-outline.svg'
 import movementIcon from '../img/briefcase-arrow-left-right.svg'
 import darkMovementOutlineIcon from '../img/briefcase-arrow-left-right-outline-custom.png'
@@ -55,21 +51,6 @@ export default function BottomNav({ tab, setTab }) {
                     }
                     className="icon"
                 />
-                <span className="label">Inicio</span>
-            </button>
-            <button
-                className={tab === 'balance' ? 'active' : ''}
-                onClick={() => setTab('balance')}
-            >
-                <img
-                    src={
-                        tab === 'balance'
-                            ? (isDark ? darkBalanceIcon : balanceIcon)
-                            : (isDark ? darkBalanceOutlineIcon : balanceOutlineIcon)
-                    }
-                    className="icon"
-                />
-                <span className="label">Balance</span>
             </button>
             <button
                 className={tab === 'transactions' ? 'active' : ''}
@@ -83,7 +64,6 @@ export default function BottomNav({ tab, setTab }) {
                     }
                     className="icon"
                 />
-                <span className="label">Movimientos</span>
             </button>
             <button
                 className={tab === 'chart' ? 'active' : ''}
@@ -97,7 +77,6 @@ export default function BottomNav({ tab, setTab }) {
                     }
                     className="icon"
                 />
-                <span className="label">Gr&aacute;ficos</span>
             </button>
             <button
                 className={tab === 'account' ? 'active' : ''}
@@ -111,7 +90,6 @@ export default function BottomNav({ tab, setTab }) {
                     }
                     className="icon"
                 />
-                <span className="label">Cuenta</span>
             </button>
         </div>
     )

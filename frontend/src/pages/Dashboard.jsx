@@ -6,7 +6,6 @@ import TransactionForm from '../components/TransactionForm'
 import Account from '../components/Account'
 import Config from '../components/Config'
 import '../styles/dashboard.css'
-import '../styles/balance.css'
 import '../styles/transactions.css'
 import '../styles/homeKpis.css'
 import '../styles/charts.css'
@@ -233,7 +232,6 @@ export default function Dashboard({ user }) {
 
     const topCategory = expenseByCategory.sort((a, b) => b.total - a.total)[0]
 
-    console.log('Top category:', topCategory)
     return (
         <div className="dashboard">
             <div className="content">
@@ -265,17 +263,6 @@ export default function Dashboard({ user }) {
                             <span className="kpi-sub">
                                 {Number(topCategory?.value || 0).toFixed(2)} €
                             </span>                        </div>
-                    </div>
-                )}
-                {tab === 'balance' && (
-                    <div className="balance-card">
-                        <h2>Balance total</h2>
-                        <p>Ingresos: <strong>{income.toFixed(2)} €</strong></p>
-                        <p>Gastos: <strong>{expenses.toFixed(2)} €</strong></p>
-                        <hr />
-                        <p className="total">
-                            Balance: <strong>{balance.toFixed(2)} €</strong>
-                        </p>
                     </div>
                 )}
                 {tab === 'transactions' && (
