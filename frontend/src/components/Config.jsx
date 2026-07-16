@@ -29,16 +29,7 @@ export default function Config({ darkMode, setDarkMode, setTab }) {
         return () => observer.disconnect();
     }, []);
     return (
-        <div className="account-grid">
-            <button
-                className="account-back-floating"
-                onClick={() => setTab('account')}
-            >
-                <img
-                    src={isDark ? darkArrowIcon : arrowIcon}
-                    alt="back"
-                />
-            </button>
+        <div className="account-card">
             <div className="account-card">
                 <h3>Ajustes</h3>
                 <div className="config-item">

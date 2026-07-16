@@ -399,14 +399,9 @@ export default function Dashboard({ user }) {
                         />
                     </div>
                 )}
-                {tab === "account" && <Account setTab={setTab} />}
-                {tab === "settings" && (
-                    <Config
-                        darkMode={darkMode}
+                {tab === "account" && <Account setTab={setTab} darkMode={darkMode}
                         setDarkMode={setDarkMode}
-                        setTab={setTab}
-                    />
-                )}
+                        setTab={setTab} />}
             </div>
             <BottomNav tab={tab} setTab={setTab} />
         </div>

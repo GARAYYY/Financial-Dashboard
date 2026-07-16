@@ -3,8 +3,9 @@ import { supabase } from '../utils/supabase'
 import "../styles/account.css";
 import cogOutlineItem from '../img/cog-outline.svg'
 import darkCogOutlineIcon from '../img/cog-outline-custom.png'
+import Config from "./Config";
 
-export default function Account({ setTab }) {
+export default function Account({ setTab, darkMode, setDarkMode }) {
     const [user, setUser] = useState(null);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -53,15 +54,6 @@ export default function Account({ setTab }) {
 
     return (
         <div className="account-grid">
-            <button
-                className="account-settings-floating"
-                onClick={() => setTab('settings')}
-            >
-                <img
-                    src={isDark ? darkCogOutlineIcon : cogOutlineItem}
-                    alt="settings"
-                />
-            </button>
             <div className="account-card">
                 <div className="account-header">
                     <div className="account-avatar">
@@ -90,6 +82,11 @@ export default function Account({ setTab }) {
                     </button>
                 </div>
             </div>
+            <Config
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+                setTab={setTab}
+            />
         </div>
     );
 }
