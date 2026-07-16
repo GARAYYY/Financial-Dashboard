@@ -226,37 +226,88 @@ export default function Dashboard({ user }) {
         "#00bcd4",
     ];
 
+    const getHealthColor = (value) => {
+    if (value >= 75) return "#08ad0d";
+    if (value >= 65) return "#7ed957";
+    if (value >= 35) return "#ffc107";
+    if (value >= 25) return "#ff9800";
+    return "#ff4d4f";
+};
+
     const topCategory = expenseByCategory.sort((a, b) => b.total - a.total)[0];
+
+    const score = Math.max(0, Math.min(100,
+        100 - (monthlyExpenses / (monthlyIncome || 1)) * 100
+    ))
+
+    const getCategoryName = (categoryId) => {
+        const cat = categories.find(c => c.id === categoryId)
+        return cat ? cat.name : "Sin categoría"
+    }
+
+    const healthPercent = monthlyIncome > 0
+        ? Math.max(0, Math.min(100, ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100))
+        : 0;
 
     return (
         <div className="dashboard">
             <div className="content">
                 {tab === "home" && (
                     <div className="home">
-                        <div className="kpi-card balance">
-                            <span className="kpi-label">Balance</span>
-                            <span className="kpi-value">{balance.toFixed(2)} €</span>
+                        <div className="chart-card big">
+                            <h3>Evolución ingresos vs gastos</h3>
+                            <ResponsiveContainer width="100%" height={200}>
+                                <AreaChart data={sortedTransactions}>
+                                    <XAxis dataKey="date" hide />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Area type="monotone" dataKey="amount" stroke="#4caf50" fill="#4caf50" />
+                                </AreaChart>
+                            </ResponsiveContainer>
                         </div>
-                        <div className="kpi-card income">
-                            <span className="kpi-label">Ingresos (mes)</span>
-                            <span className="kpi-value">{monthlyIncome.toFixed(2)} €</span>
+                        <div className="card">
+                            <h3>Últimos movimientos</h3>
+                            {transactions.slice(0, 5).map(t => (
+                                <div key={t.id} className="mini-transaction">
+                                    <span>{getCategoryName(t.category_id)}</span>
+                                    <span className={t.type}>
+                                        {t.type === 'income' ? '+' : '-'}{t.amount.toFixed(2)}€
+                                    </span>
+                                </div>
+                            ))}
                         </div>
-                        <div className="kpi-card expenses">
-                            <span className="kpi-label">Gastos (mes)</span>
-                            <span className="kpi-value">{monthlyExpenses.toFixed(2)} €</span>
+                        <div className="card">
+                            <h3>Top gastos</h3>
+                            {expenseByCategory
+                                .sort((a, b) => b.value - a.value)
+                                .slice(0, 5)
+                                .map((c, i) => (
+                                    <div key={i} className="rank-item">
+                                        <span>#{i + 1} {c.name}</span>
+                                        <span>{c.value.toFixed(2)} €</span>
+                                    </div>
+                                ))}
                         </div>
-                        <div className="kpi-card last">
-                            <span className="kpi-label">Último movimiento</span>
-                            <span className="kpi-sub">
-                                {lastTransaction?.description || "Sin datos"}
+                        <div className="kpi-card-score">
+                            <span className="kpi-label">Salud financiera</span>
+
+                            <div className="health-bar">
+                                <div
+                                    className="health-fill"
+                                    style={{
+                                        width: `${healthPercent}%`,
+                                        background: getHealthColor(healthPercent)
+                                    }}
+                                />
+                            </div>
+
+                            <span className="kpi-value">
+                                {healthPercent.toFixed(0)}%
                             </span>
                         </div>
-                        <div className="kpi-card category">
-                            <span className="kpi-label">Top categoría</span>
-                            <span className="kpi-value">{topCategory?.name || "—"}</span>
-                            <span className="kpi-sub">
-                                {Number(topCategory?.value || 0).toFixed(2)} €
-                            </span>{" "}
+                        <div className="quick-actions">
+                            <button onClick={() => setTab("transactions")}>Añadir movimiento</button>
+                            <button onClick={() => setTab("chart")}>Ver análisis</button>
                         </div>
                     </div>
                 )}
@@ -399,9 +450,14 @@ export default function Dashboard({ user }) {
                         />
                     </div>
                 )}
-                {tab === "account" && <Account setTab={setTab} darkMode={darkMode}
+                {tab === "account" && (
+                    <Account
+                        setTab={setTab}
+                        darkMode={darkMode}
                         setDarkMode={setDarkMode}
-                        setTab={setTab} />}
+                        setTab={setTab}
+                    />
+                )}
             </div>
             <BottomNav tab={tab} setTab={setTab} />
         </div>
