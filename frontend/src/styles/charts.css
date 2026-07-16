@@ -72,6 +72,38 @@
     font-weight: 600;
 }
 
+.export-btn {
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.7);
+    color: #444;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.export-btn:active {
+    transform: scale(0.98);
+}
+
+.export-btn.secondary {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.export-btn.secondary:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
 /* DARK MODE */
 body.dark .chart-grid {
     display: flex;
@@ -145,4 +177,14 @@ body.dark .chart-card h3 {
     font-size: 13px;
     color: #e7e7e7;
     font-weight: 600;
+}
+
+body.dark .export-btn {
+    background: rgba(30, 30, 30, 0.7);
+    color: #e7e7e7;
+}
+
+body.dark .export-btn.secondary {
+    background: rgba(30, 30, 30, 0.7);
+    color: #e7e7e7;
 }
