@@ -48,28 +48,6 @@
     margin: 4px 0;
 }
 
-.quick-actions {
-    grid-column: span 2;
-    display: flex;
-    gap: 10px;
-}
-
-.quick-actions button {
-    flex: 1;
-    padding: 10px;
-    border-radius: 12px;
-    border: none;
-    background: #eaeaea;
-    color: #444;
-    font-size: 13px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.quick-actions button:hover {
-    opacity: 0.85;
-}
-
 .kpi-card-score{
     grid-column: span 2;
 }
@@ -89,6 +67,65 @@
     transition: width 0.4s ease, background 0.4s ease;
 }
 
+.balance-widget {
+    grid-column: span 2;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.balance-title {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.balance-amount {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.balance-amount.positive {
+    color: #2e7d32;
+}
+
+.balance-amount.negative {
+    color: #c62828;
+}
+
+.balance-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.balance-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.balance-actions button {
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.balance-actions button:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
 /* DARK MODE */
 
 body.dark .card,
@@ -106,7 +143,6 @@ body.dark .rank-item {
     color: #ccc;
 }
 
-body.dark .quick-actions button {
-    background: #4a4a4a;
-    color: #e7e7e7
+body.dark .balance-widget {
+    background: rgba(30, 30, 30, 0.7);
 }

@@ -227,27 +227,41 @@ export default function Dashboard({ user }) {
     ];
 
     const getHealthColor = (value) => {
-    if (value >= 75) return "#08ad0d";
-    if (value >= 65) return "#7ed957";
-    if (value >= 35) return "#ffc107";
-    if (value >= 25) return "#ff9800";
-    return "#ff4d4f";
-};
+        if (value >= 75) return "#08ad0d";
+        if (value >= 65) return "#7ed957";
+        if (value >= 35) return "#ffc107";
+        if (value >= 25) return "#ff9800";
+        return "#ff4d4f";
+    };
 
     const topCategory = expenseByCategory.sort((a, b) => b.total - a.total)[0];
 
-    const score = Math.max(0, Math.min(100,
-        100 - (monthlyExpenses / (monthlyIncome || 1)) * 100
-    ))
+    const score = Math.max(
+        0,
+        Math.min(100, 100 - (monthlyExpenses / (monthlyIncome || 1)) * 100),
+    );
 
     const getCategoryName = (categoryId) => {
-        const cat = categories.find(c => c.id === categoryId)
-        return cat ? cat.name : "Sin categoría"
-    }
+        const cat = categories.find((c) => c.id === categoryId);
+        return cat ? cat.name : "Sin categoría";
+    };
 
-    const healthPercent = monthlyIncome > 0
-        ? Math.max(0, Math.min(100, ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100))
-        : 0;
+    const healthPercent =
+        monthlyIncome > 0
+            ? Math.max(
+                0,
+                Math.min(
+                    100,
+                    ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100,
+                ),
+            )
+            : 0;
+
+    const chartData = sortedTransactions.map((t) => ({
+        date: t.date,
+        income: t.type === "income" ? t.amount : 0,
+        expense: t.type === "expense" ? t.amount : 0,
+    }));
 
     return (
         <div className="dashboard">
@@ -257,21 +271,37 @@ export default function Dashboard({ user }) {
                         <div className="chart-card big">
                             <h3>Evolución ingresos vs gastos</h3>
                             <ResponsiveContainer width="100%" height={200}>
-                                <AreaChart data={sortedTransactions}>
+                                <AreaChart data={chartData}>
                                     <XAxis dataKey="date" hide />
                                     <YAxis />
                                     <Tooltip />
-                                    <Area type="monotone" dataKey="amount" stroke="#4caf50" fill="#4caf50" />
+                                    <Area
+                                        type="monotone"
+                                        dataKey="income"
+                                        stroke="#08ad0d"
+                                        fill="#08ad0d"
+                                        fillOpacity={0.15}
+                                        strokeWidth={2}
+                                    />
+                                    <Area
+                                        type="monotone"
+                                        dataKey="expense"
+                                        stroke="#ff4d4f"
+                                        fill="#ff4d4f"
+                                        fillOpacity={0.15}
+                                        strokeWidth={2}
+                                    />
                                 </AreaChart>
                             </ResponsiveContainer>
                         </div>
                         <div className="card">
                             <h3>Últimos movimientos</h3>
-                            {transactions.slice(0, 5).map(t => (
+                            {transactions.slice(0, 5).map((t) => (
                                 <div key={t.id} className="mini-transaction">
                                     <span>{getCategoryName(t.category_id)}</span>
                                     <span className={t.type}>
-                                        {t.type === 'income' ? '+' : '-'}{t.amount.toFixed(2)}€
+                                        {t.type === "income" ? "+" : "-"}
+                                        {t.amount.toFixed(2)}€
                                     </span>
                                 </div>
                             ))}
@@ -283,7 +313,9 @@ export default function Dashboard({ user }) {
                                 .slice(0, 5)
                                 .map((c, i) => (
                                     <div key={i} className="rank-item">
-                                        <span>#{i + 1} {c.name}</span>
+                                        <span>
+                                            #{i + 1} {c.name}
+                                        </span>
                                         <span>{c.value.toFixed(2)} €</span>
                                     </div>
                                 ))}
@@ -296,18 +328,24 @@ export default function Dashboard({ user }) {
                                     className="health-fill"
                                     style={{
                                         width: `${healthPercent}%`,
-                                        background: getHealthColor(healthPercent)
+                                        background: getHealthColor(healthPercent),
                                     }}
                                 />
                             </div>
 
-                            <span className="kpi-value">
-                                {healthPercent.toFixed(0)}%
-                            </span>
+                            <span className="kpi-value">{healthPercent.toFixed(0)}%</span>
                         </div>
-                        <div className="quick-actions">
-                            <button onClick={() => setTab("transactions")}>Añadir movimiento</button>
-                            <button onClick={() => setTab("chart")}>Ver análisis</button>
+                        <div className="balance-widget">
+                            <span className="balance-title">Saldo actual</span>
+
+                            <span className={`balance-amount ${balance >= 0 ? "positive" : "negative"}`}>
+                                {balance.toFixed(2)} €
+                            </span>
+
+                            <div className="balance-meta">
+                                <span>Ingresos: +{monthlyIncome.toFixed(2)} €</span>
+                                <span>Gastos: -{monthlyExpenses.toFixed(2)} €</span>
+                            </div>
                         </div>
                     </div>
                 )}
