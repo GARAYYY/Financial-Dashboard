@@ -9,7 +9,7 @@ import ExportExcelButton from "../components/ExportStatus";
 import ExportTransactionsButton from "../components/ExportMovements";
 import "../styles/dashboard.css";
 import "../styles/transactions.css";
-import "../styles/homeKpis.css";
+import "../styles/home.css";
 import "../styles/charts.css";
 import {
     LineChart,
