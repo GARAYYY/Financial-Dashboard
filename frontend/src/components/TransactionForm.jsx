@@ -11,19 +11,27 @@ export default function TransactionForm({ onSave, onCancel, initial, categories 
     )
     const [categoryId, setCategoryId] = useState(initial?.category_id || '')
 
+    // 🆕 NUEVO
+    const [isRecurring, setIsRecurring] = useState(initial?.is_recurring || false)
+    const [recurringType, setRecurringType] = useState(initial?.recurring_type || 3)
+
     useEffect(() => {
         setCategoryId('')
     }, [type])
-    console.log(categories)
+
     const handleSubmit = (e) => {
         e.preventDefault()
+
         onSave({
             id: initial?.id,
             type,
-            amount,
+            amount: Number(amount),
             description,
             date,
-            category_id: categoryId // 🆕
+            category_id: categoryId,
+            is_recurring: isRecurring,
+            recurring_type: isRecurring ? Number(recurringType) : null,
+            last_generated: isRecurring ? date : null // 👈 importante
         })
     }
 
@@ -78,6 +86,29 @@ export default function TransactionForm({ onSave, onCancel, initial, categories 
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
             />
+            <div className="tx-recurring">
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={isRecurring}
+                        onChange={(e) => setIsRecurring(e.target.checked)}
+                    />
+                    Recurrente
+                </label>
+                {isRecurring && (
+                    <select
+                        value={recurringType}
+                        onChange={(e) => setRecurringType(e.target.value)}
+                    >
+                        <option value={1}>Diario</option>
+                        <option value={2}>Semanal</option>
+                        <option value={3}>Mensual</option>
+                        <option value={4}>Anual</option>
+                    </select>
+                )}
+            </div>
+
+            {/* BOTONES */}
             <div className="tx-form-actions">
                 <button type="submit" className="primary">
                     Guardar

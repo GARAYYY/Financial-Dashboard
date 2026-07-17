@@ -89,6 +89,51 @@
     margin: 10px 0;
 }
 
+.tx-recurring {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.tx-recurring label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #2b2b2b;
+}
+
+.tx-recurring input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.tx-recurring select {
+    margin-top: 5px;
+    transition: all 0.2s ease;
+}
+
+.tx-recurring select {
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* DARK MODE */
 body.dark .tx-form {
     display: flex;
@@ -183,4 +228,16 @@ body.dark .tx-form-actions .secondary:hover {
 body.dark .tx-form h3{
     color: #e7e7e7;
     margin: 10px 0;
+}
+
+body.dark .tx-recurring {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark .tx-recurring label {
+    color: #e7e7e7;
+}
+
+body.dark .tx-recurring input[type="checkbox"] {
+    accent-color: #888;
 }
